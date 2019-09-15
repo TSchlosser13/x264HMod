@@ -1,0 +1,102 @@
+.\" x264HMod.man
+
+
+.TH man 1 "1. April 2016" "1.0" "x264HMod Man Page"
+
+
+.SH NAME
+x264HMod
+
+.SH SYNOPSIS
+.B x264
+[<Pfad>/]<Eingabe-Videodatei>
+.B -o
+[<Pfad>/]<Ausgabe-Videodatei>
+ [
+.B --keyint
+<keyint=(>0)>
+.B --qp
+<qp=(0-51)> ]
+.B --threads
+1
+ [ ++enable_HMod  <order=(1-7)> <scale_hip=(>0.0f)> <scale_sq=(>0.0f)>
+                   <mode=(0-3)> <radius=(>0.0f)> <threads=(>0)> ]
+ [ ++enable_quant <quant_mode=(0|1|2)> <quant_qf=(1-99)> ]
+ [ ++enable_HFBs  <filter=(0-6)> ]
+ [ ++enable_scale <scale=(0|1)> ]
+ [ ++enable_HMEC  <HMEC_size=(7|49)> <HMEC_mode=(0|1)> <HMEC_metric=(0-6)>
+                   <HMEC_range=(>0.0f)> <HMEC_factor=(>0.0f)> ]
+
+.SH DESCRIPTION
+Hexagonal Image Processing Framework CHIP in x264
+
+
+.SH OPTIONS
+
+.IP <keyint=(>0)>
+GOP-Größe (1 = I-Frames only)
+
+.IP <qp=(0-51)>
+Quantisierungsfaktor x264 (beste bis schlechteste Qualität)
+
+.IP <order=(1-7)>
+Ordnung Hexarray
+
+.IP <scale_hip=(>0.0f)>
+Skalierungsfaktor Hintransformation
+
+.IP <scale_sq=(>0.0f)>
+Skalierungsfaktor Rücktransformation
+
+.IP <mode=(0-3)>
+Bilineare | bikubische | Lanczos- | B-Spline-Interpolation (B_3)
+
+.IP <radius=(>0.0f)>
+Radius Rücktransformation
+
+.IP <threads=(>0)>
+# Pthreads Rücktransformation
+
+.IP <quant_mode=(0|1|2)>
+Quantisierung: exponentielle | lineare | konstante
+
+.IP <quant_qf=(1-99)>
+Quantisierungsfaktor (schlechteste bis beste Qualität)
+
+.IP <filter=(0-6)>
+Filter: Blurring- | Unblurring- | Low- | High-pass filters
+ (4: 0°, 120°, 240°, (0° + 120° + 240°) / 3)
+
+.IP <scale=(0|1)>
+Skalierung: Herunterskalierung nach HIP - eine Version | nach HIP - sieben Versionen
+
+.IP <HMEC_size=(7|49)>
+ME und MC: MB-Größe
+
+.IP <HMEC_mode=(0|1)>
+MBs der Sub-Hexarrays verrechnen | alle möglichen
+
+.IP <HMEC_metric=(0-6)>
+SAD | MAD | MSE | RMSE | PSNR | SSIM | DSSIM
+
+.IP <HMEC_range=(>0.0f)>
+Max. Länge der Bewegungsvektoren
+
+.IP <HMEC_factor=(>0.0f)>
+Zulässiges Max. / Min. aus dem Vergleich der MBs
+
+
+.SH EXAMPLE
+ ./x264 ${Eingabevideo_Dateiname}.y4m -o ${Ausgabevideo_Dateiname}.mkv --keyint 1 --qp 0 --threads 1 ++enable_HMod 5 2.0 0.5 1 1.0 1
+
+.SH SEE ALSO
+.B CHIP(1), dcrawHMod(1), Hex-Muxer(1), Hex-Player(1), HMEC(1), Nexys-Video-HDMIHMod(1)
+
+.SH BUGS
+-
+
+.SH AUTHOR
+Tobias Schlosser (tobias.schlosser@informatik.tu-chemnitz.de)
+
+.SH COPYING
+Siehe Datei "_HMod/COPYING"
